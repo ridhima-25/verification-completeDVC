@@ -10,7 +10,17 @@ import LandTemplate from "./LandTemplate";
 import { ReactComponent as DocumentIcon } from "../../../../assets/document.svg";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { goHomeScreen } from "../../../../redux/features/verification/verification.slice";
-
+const propertyOrder = [
+  "farmerId",
+  "farmerName",
+  "identifierName",
+  "gender",
+  "dob",
+  "landDetails",
+  "cropDetails",
+  "issuanceDate",
+  "disclaimer",
+];
 function VcDisplayCard({ vc }: { vc: any }) {
   const dispatch = useAppDispatch();
   return (
@@ -19,30 +29,30 @@ function VcDisplayCard({ vc }: { vc: any }) {
         className={`grid w-[340px] m-auto bg-white rounded-[12px] py-[5px] px-[15px] shadow-lg`}
       >
         {vc ? (
-          Object.keys(vc.credentialSubject)
+          propertyOrder
             .filter(
               (key) =>
-                key?.toLowerCase() !== "id" && key?.toLowerCase() !== "type"
+                vc.credentialSubject.hasOwnProperty(key) &&
+                key?.toLowerCase() !== "id" &&
+                key?.toLowerCase() !== "type"
             )
+            // Object.keys(vc.credentialSubject)
+            //   .filter(
+            //     (key) =>
+            //       key?.toLowerCase() !== "id" && key?.toLowerCase() !== "type"
+            //   )
             .map((key, index) => (
-              <div
-                className={`py-2.5 px-1 xs:col-end-13 ${
-                  index % 2 === 0
-                    ? "lg:col-start-1 lg:col-end-6"
-                    : "lg:col-start-8 lg:col-end-13"
-                }`}
-                key={key}
-              >
+              <div className={`py-2.5 px-1 xs:col-end-13`} key={key}>
                 <p
                   id={convertToId(key)}
-                  className="font-normal text-[11px] break-all"
+                  className="font-bold text-[11px] break-all"
                 >
                   {convertToTitleCase(key)}
                 </p>
                 {typeof vc.credentialSubject[key] === "string" ? (
                   <p
                     id={`${convertToId(key)}-value`}
-                    className="font-bold text-[12px] break-all"
+                    className="font-normal text-[12px] break-all"
                   >
                     {getDisplayValue(vc.credentialSubject[key])}
                   </p>
