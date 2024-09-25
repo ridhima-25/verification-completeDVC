@@ -87,16 +87,16 @@ function VerificationMethodTabs(props: any) {
         >
           <div className="flex space-x-0.5 border-gray-200 font-bold items-end mx-auto lg:justify-center">
             <Tab
-              id="upload-qr-code-tab"
-              active={method === "UPLOAD"}
-              label="Upload QR Code"
-              onClick={() => switchToVerificationMethod("UPLOAD")}
-            />
-            <Tab
               id="scan-qr-code-tab"
               active={method === "SCAN"}
               label="Scan the QR Code"
               onClick={() => switchToVerificationMethod("SCAN")}
+            />
+            <Tab
+              id="upload-qr-code-tab"
+              active={method === "UPLOAD"}
+              label="Upload QR Code"
+              onClick={() => switchToVerificationMethod("UPLOAD")}
             />
             {/* <Tab id="vp-verification-tab" active={false} label="VP Verification" disabled onClick={showAlert}/>
                         <Tab id="ble-tab" active={false} label="BLE" disabled onClick={showAlert}/> */}
