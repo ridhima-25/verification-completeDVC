@@ -10,14 +10,25 @@ import LandTemplate from "./LandTemplate";
 import { ReactComponent as DocumentIcon } from "../../../../assets/document.svg";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { goHomeScreen } from "../../../../redux/features/verification/verification.slice";
+import AssetTemplate from "./AssetTemplate";
 const propertyOrder = [
   "farmerId",
   "farmerName",
   "identifierName",
   "gender",
   "dob",
+  "address",
+  "assetCredentials",
   "landDetails",
+  "farmId",
+  "surveyNumber",
+  "village",
+  "district",
   "cropDetails",
+  "season",
+  "year",
+  "cropName",
+  "sownArea",
   "issuanceDate",
   "disclaimer",
 ];
@@ -26,7 +37,7 @@ function VcDisplayCard({ vc }: { vc: any }) {
   return (
     <div>
       <div
-        className={`grid w-[340px] m-auto bg-white rounded-[12px] py-[5px] px-[15px] shadow-lg`}
+        className={`grid w-[700px] m-auto bg-white rounded-[12px] py-[5px] px-[15px] shadow-lg`}
       >
         {vc ? (
           propertyOrder
@@ -60,6 +71,11 @@ function VcDisplayCard({ vc }: { vc: any }) {
                   <LandTemplate value={vc.credentialSubject[key]} />
                 ) : key === "cropDetails" ? (
                   <CropTemplate value={vc.credentialSubject[key]} />
+                ) : key === "assetCredentials" ? (
+                  <AssetTemplate
+                    value={vc.credentialSubject[key]}
+                    assetHash={vc.credentialSubject.assetHash}
+                  />
                 ) : (
                   <p
                     id={`${convertToId(key)}-value`}

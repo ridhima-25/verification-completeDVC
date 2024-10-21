@@ -10,8 +10,13 @@ import { raiseAlert } from "../../../redux/features/alerts/alerts.slice";
 import "./ScanningLine.css";
 
 let timer: NodeJS.Timeout;
+// QRScanner.tsx
+interface QRScannerProps {
+  onScanResult?: (result: string) => void;
+}
 
-function QrScanner() {
+const QrScanner: React.FC<QRScannerProps> = ({ onScanResult }) => {
+  // function QrScanner() {
   const dispatch = useAppDispatch();
   const [isCameraBlocked, setIsCameraBlocked] = useState(false);
   const cameraMode = "environment";
@@ -21,6 +26,12 @@ function QrScanner() {
   const zxingRef = useRef<any>(null);
 
   const scannerRef = useRef<HTMLDivElement>(null);
+
+  const handleScanResult = (result: string) => {
+    if (onScanResult) {
+      onScanResult(result);
+    }
+  };
 
   useEffect(() => {
     timer = setTimeout(() => {
@@ -248,6 +259,6 @@ function QrScanner() {
       />
     </div>
   );
-}
+};
 
 export default QrScanner;
