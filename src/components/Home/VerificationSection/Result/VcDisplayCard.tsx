@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   convertToId,
   convertToTitleCase,
@@ -21,7 +21,38 @@ const propertyOrder = [
   "issuanceDate",
   "disclaimer",
 ];
-function VcDisplayCard({ vc }: { vc: any }) {
+
+interface VcDisplayCardProps {
+  vc: any;
+}
+// function VcDisplayCard({ vc }: { vc: any }) {
+const VcDisplayCard: React.FC<VcDisplayCardProps> = ({ vc }) => {
+  useEffect(() => {
+    const storeCredential = async () => {
+      if (!vc) return;
+      console.log("VC in VC Display: ", vc.credentialSubject);
+      try {
+        const response = await fetch("http://localhost:3000/store-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(vc),
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("Data stored successfully:", data);
+      } catch (error) {
+        console.error("Failed to store data:", error);
+      }
+    };
+
+    // Call the function to store the credential
+    storeCredential();
+  }, [vc]);
   const dispatch = useAppDispatch();
   return (
     <div>
@@ -89,6 +120,6 @@ function VcDisplayCard({ vc }: { vc: any }) {
       </div>
     </div>
   );
-}
+};
 
 export default VcDisplayCard;
