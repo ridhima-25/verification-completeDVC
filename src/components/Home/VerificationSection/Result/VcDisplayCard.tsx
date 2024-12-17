@@ -29,25 +29,35 @@ interface VcDisplayCardProps {
 const VcDisplayCard: React.FC<VcDisplayCardProps> = ({ vc }) => {
   useEffect(() => {
     const storeCredential = async () => {
+      console.log("Inside Store Credential");
       if (!vc) return;
       console.log("VC in VC Display: ", vc.credentialSubject);
-      try {
-        const response = await fetch("http://localhost:3000/store-data", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(vc),
-        });
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
+      // try {
+      // const response = await fetch("http://localhost:3000/store-data", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(vc),
+      // });
+      // if (!response.ok) {
+      //   throw new Error(`Error: ${response.statusText}`);
+      // }
 
-        const data = await response.json();
-        console.log("Data stored successfully:", data);
-      } catch (error) {
-        console.error("Failed to store data:", error);
-      }
+      // const data = await response.json();
+      // console.log("Data stored successfully:", data);
+      // Send a message to the parent window
+      // const credSub = {
+      //   id: vc.id,
+      //   sub: vc.credentialSubject,
+      // };
+
+      window?.opener?.postMessage({ type: "DVC_SCANNED", cred: vc }, "*");
+      // Close the window upon successful completion
+      window?.close();
+      // } catch (error) {
+      //   console.error("Failed to store data:", error);
+      // }
     };
 
     // Call the function to store the credential

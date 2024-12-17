@@ -11,7 +11,7 @@ const backgroundColorMapping: any = {
 const displayMessageMapping = {
   EXPIRED: "Unfortunately, the given credential is expired!",
   INVALID: "Unfortunately, the given credential is invalid!",
-  SUCCESS: "The given credential is valid and saved successfully!",
+  SUCCESS: "The given credential is valid!",
 };
 
 const ResultSummary = ({
